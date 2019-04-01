@@ -22,7 +22,7 @@ Dialog1::~Dialog1()
 //Seleccionamos el directorio donde estan las imagenes
 void Dialog1::on_pushButton_2_clicked()
 {
-    ruta = QFileDialog::getExistingDirectory(0, ("select input directory"), QDir::homePath());
+    rutaOrigen = QFileDialog::getExistingDirectory(0, ("select input directory"), QDir::homePath());
 
 }
 
@@ -36,7 +36,7 @@ void Dialog1::on_pushButton_3_clicked()
 void Dialog1::on_pushButton_clicked()
 {
     //Selecciona todas las imagenes de la ruta selecciona
-    QStringList fotos = ruta.entryList(QStringList() << "*.jpg", QDir::Files);
+    QStringList fotos = rutaOrigen.entryList(QStringList() << "*.jpg", QDir::Files);
 
     clock_t inicio, fin;
 
@@ -49,40 +49,44 @@ void Dialog1::on_pushButton_clicked()
         //iniciamos el tiempo
         inicio = clock();
 
-        foreach (QString name, fotos){
-            //Seleccionamos el nombre de la imagen
-            QString nombre = name;
-            nombre = ruta.absoluteFilePath(nombre);
+        //Seleccionamos el nombre de la imagen
+        QString nombre;
+        QString name;
+        nombre = name;
+        nombre = rutaOrigen.absoluteFilePath(nombre);
 
-            //Cambiamos el nombre a las imagenes modificadas
-            QImage original, modificada;
-            original.load(nombre);
-            modificada.load(nombre);
+        //Cambiamos el nombre a las imagenes modificadas
+        QImage original, modificada;
+        original.load(nombre);
+        modificada.load(nombre);
 
-            //Modifamos el color
-            for(int i = 0; original.width(); i++){
-                for(int j = 0; original.height(); j++){
-                    QRgb pix = original.pixel(i,j);
-                    int rojo = qRed(pix);
-                    QRgb value = qRgb(rojo, 0, 0);
-                    modificada.setPixel(i, j, value);
-                }
+        //Modificamos el color
+        for(int i = 0; original.width(); i++){  //ancho de la imagen
+            for(int j = 0; original.height(); j++){ //alto de la imagen
+                QRgb pix = original.pixel(i,j);
+                int rojo = qRed(pix);
+                QRgb value = qRgb(rojo, 0, 0);
+                modificada.setPixel(i, j, value);
             }
-            //Cambiamos el nombre con la imagen modificada
-            QPixmap a = QPixmap::fromImage(modificada);
-            a.save(rutaDestino.absolutePath()+"/"+nombre.split(".jpg")[0]+"Modificada.jpg");
         }
+        //Cambiamos el nombre con la imagen modificada
+        QPixmap a = QPixmap::fromImage(modificada);
+        a.save(rutaDestino.absolutePath()+"/"+nombre.split(".jpg")[0]+"Modificada.jpg");
+
         //Finalizamos los tiempos
         fin = clock();
         tiempos[i] = (double)(fin - inicio)/CLOCKS_PER_SEC;
         media = media + tiempos[i];
     }
     //Mostramos los tiempos
-    ui->lineEdit_3->setText(QString::number(tiempos[0]));
-    ui->lineEdit_4->setText(QString::number(tiempos[1]));
-    ui->lineEdit_5->setText(QString::number(tiempos[2]));
-    ui->lineEdit_6->setText(QString::number(tiempos[3]));
-    ui->lineEdit_7->setText(QString::number(tiempos[4]));
-    ui->lineEdit_7->setText(QString::number(media));
+    ui->tiempo1->setText(QString::number(tiempos[0]) + " segundos");
+    ui->tiempo2->setText(QString::number(tiempos[1]) + " segundos");
+    ui->tiempo3->setText(QString::number(tiempos[2]) + " segundos");
+    ui->tiempo4->setText(QString::number(tiempos[3]) + " segundos");
+    ui->tiempo5->setText(QString::number(tiempos[4]) + " segundos") ;
+    ui->media->setText(QString::number(media) + " segundos");
+
+
+
 
 }

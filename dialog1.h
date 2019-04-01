@@ -25,7 +25,7 @@ private slots:
 
 private:
     Ui::Dialog1 *ui;
-    QDir ruta;
+    QDir rutaOrigen;
     QDir rutaDestino;
 
 };

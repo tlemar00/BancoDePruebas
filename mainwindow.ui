@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Modificar imágenes.</string>
+     <string>Modificar imágenes</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">

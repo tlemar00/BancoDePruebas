@@ -97,12 +97,12 @@
     <string>Directorio destino</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="tiempo2">
    <property name="geometry">
     <rect>
      <x>190</x>
      <y>190</y>
-     <width>113</width>
+     <width>141</width>
      <height>20</height>
     </rect>
    </property>
@@ -133,22 +133,22 @@
     <string>Tiempo 3</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="tiempo1">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>190</y>
-     <width>113</width>
+     <width>141</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_7">
+  <widget class="QLineEdit" name="tiempo5">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>310</y>
-     <width>113</width>
+     <width>141</width>
      <height>20</height>
     </rect>
    </property>
@@ -166,12 +166,12 @@
     <string>Tiempo 5</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_6">
+  <widget class="QLineEdit" name="tiempo4">
    <property name="geometry">
     <rect>
      <x>190</x>
      <y>250</y>
-     <width>113</width>
+     <width>141</width>
      <height>20</height>
     </rect>
    </property>
@@ -202,22 +202,22 @@
     <string>Tiempo 1:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="tiempo3">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>250</y>
-     <width>113</width>
+     <width>141</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="media">
    <property name="geometry">
     <rect>
      <x>170</x>
      <y>380</y>
-     <width>113</width>
+     <width>141</width>
      <height>25</height>
     </rect>
    </property>
