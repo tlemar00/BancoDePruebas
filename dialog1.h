@@ -2,6 +2,7 @@
 #define DIALOG1_H
 
 #include <QDialog>
+#include <QDir>
 
 namespace Ui {
 class Dialog1;
@@ -20,10 +21,13 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Dialog1 *ui;
-    QString ruta;
-    QString rutaDestino;
+    QDir ruta;
+    QDir rutaDestino;
+
 };
 
 #endif // DIALOG1_H
