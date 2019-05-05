@@ -1,5 +1,6 @@
 #include "dialog1.h"
 #include "ui_dialog1.h"
+#include "QMessageBox"
 
 #include <QFileDialog>
 #include <QDir>
@@ -19,65 +20,58 @@ Dialog1::~Dialog1()
     delete ui;
 }
 
-//Seleccionamos el directorio donde estan las imagenes
+//Seleccionamos la imagen a modificar
+QString Dialog1::obtenerRuta()
+{
+    rutaOrigen = QFileDialog::getOpenFileName(this, tr("Abrir"), "nombre",tr("ImageFiles(*.png *.jpg *.bmp)"));
+    original = QImage(rutaOrigen);
+
+    return rutaOrigen;
+}
+
+//cargamos la ruta
 void Dialog1::on_pushButton_2_clicked()
 {
-    rutaOrigen = QFileDialog::getExistingDirectory(0, ("select input directory"), QDir::homePath());
+    QString ruta = obtenerRuta();
+    original.load(rutaOrigen);
 
 }
-
-//Seleccionamos el directorio donde queremos guardar las imagenes modificadas
-void Dialog1::on_pushButton_3_clicked()
-{
-    rutaDestino = QFileDialog::getExistingDirectory(0, ("select input directory"), QDir::homePath());
-}
-
 
 void Dialog1::on_pushButton_clicked()
 {
-    //Selecciona todas las imagenes de la ruta selecciona
-    QStringList fotos = rutaOrigen.entryList(QStringList() << "*.jpg", QDir::Files);
 
+    //definimos variables que nos van a hacer falta
     clock_t inicio, fin;
-
     int tam = 5;
     double tiempos[tam];
+    double sumaTiempos = 0;
     double media = 0;
 
-    for(int i = 0; i < tam; i++){
-
+    //hacemos un bucle que hace los 5 tiempos
+    for(int bu = 0; bu < tam; bu++){
+        modificada = original;
         //iniciamos el tiempo
         inicio = clock();
 
-        //Seleccionamos el nombre de la imagen
-        QString nombre;
-        QString name;
-        nombre = name;
-        nombre = rutaOrigen.absoluteFilePath(nombre);
-
-        //Cambiamos el nombre a las imagenes modificadas
-        QImage original, modificada;
-        original.load(nombre);
-        modificada.load(nombre);
-
         //Modificamos el color
-        for(int i = 0; original.width(); i++){  //ancho de la imagen
-            for(int j = 0; original.height(); j++){ //alto de la imagen
-                QRgb pix = original.pixel(i,j);
-                int rojo = qRed(pix);
-                QRgb value = qRgb(rojo, 0, 0);
-                modificada.setPixel(i, j, value);
+        for(int i = 0; i < modificada.width(); i++){  //ancho de la imagen
+            for(int j = 0; j < modificada.height(); j++){ //alto de la imagen
+                QRgb rgb = modificada.pixel(i, j);
+                QRgb nuevoValorRgb = qRgb(qRed(rgb), 0, 0);
+                modificada.setPixel(i, j, nuevoValorRgb);
             }
         }
-        //Cambiamos el nombre con la imagen modificada
-        QPixmap a = QPixmap::fromImage(modificada);
-        a.save(rutaDestino.absolutePath()+"/"+nombre.split(".jpg")[0]+"Modificada.jpg");
 
         //Finalizamos los tiempos
         fin = clock();
-        tiempos[i] = (double)(fin - inicio)/CLOCKS_PER_SEC;
-        media = media + tiempos[i];
+        //lo pasamos a segundos
+        tiempos[bu] = (double)(fin - inicio)/CLOCKS_PER_SEC;
+        sumaTiempos = sumaTiempos + tiempos[bu];
+        //Calculamos la media
+        media = sumaTiempos / tam;
+
     }
+
     //Mostramos los tiempos
     ui->tiempo1->setText(QString::number(tiempos[0]) + " segundos");
     ui->tiempo2->setText(QString::number(tiempos[1]) + " segundos");
@@ -86,7 +80,25 @@ void Dialog1::on_pushButton_clicked()
     ui->tiempo5->setText(QString::number(tiempos[4]) + " segundos") ;
     ui->media->setText(QString::number(media) + " segundos");
 
+    //guardamos la imagen
+    QMessageBox msgBox;
+        msgBox.setText("La imagen ha sido modificada.");
+        msgBox.setInformativeText("¿Quieres guardar los cambios?");
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+       int elegido = msgBox.exec();
+        if (elegido == QMessageBox::Save) {
+             modificada.save("/home/delsi/Descargas/bancoDePruebasFinal-master/ARCHIVOS/modificada.jpg","jpg",-1);
+        }
+}
 
-
-
+//limpiamos los lineEdit
+void Dialog1::on_pushButton_3_clicked()
+{
+    ui->tiempo1->clear();
+    ui->tiempo2->clear();
+    ui->tiempo3->clear();
+    ui->tiempo4->clear();
+    ui->tiempo5->clear();
+    ui->media->clear();
 }

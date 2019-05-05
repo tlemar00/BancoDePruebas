@@ -17,17 +17,19 @@ public:
     ~Dialog1();
 
 private slots:
-    void on_pushButton_2_clicked();
+    QString obtenerRuta();
 
-    void on_pushButton_3_clicked();
+    void on_pushButton_2_clicked();
 
     void on_pushButton_clicked();
 
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Dialog1 *ui;
-    QDir rutaOrigen;
-    QDir rutaDestino;
-
+    QString rutaOrigen;
+    QImage original;
+    QImage modificada;
 };
 
 #endif // DIALOG1_H
